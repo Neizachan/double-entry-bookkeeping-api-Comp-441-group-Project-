@@ -12,3 +12,9 @@ P4	TransferServiceImpl	"You are a Java 8 / JUnit 4 test engineer. Write unit tes
 P5	(optional) refinement	"Improve the tests above to raise branch coverage"	—	N/A	N/A	—
 Rules for a fair v1: (a) do not add assertions by hand to the AI files, (b) delete any AI test that does not compile or fails because it is wrong, and RECORD each deletion here, (c) never feed the AI the PIT report before v1 is measured.
 Declaration of AI Tool Use must list this tool and these activities.
+#	EDITS MADE TO AI OUTPUTS
+TransferRequestAiTest.builderShouldReplaceAccountWhenAccountIsCalledAgain
+TransferRequestAiTest.toMoneyShouldRejectNullAmountString
+TransferRequestAiTest.builderShouldNotEnforceMinimumLegCount
+TransferValidatorImplAiTest.validateTransferRequestShouldRejectEmptyRequest
+TransferValidatorImplAiTest.isTransactionBalancedShouldRejectDifferentBigDecimalScale

@@ -12,6 +12,9 @@
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <github.global.server>github</github.global.server>
+    <!-- AI Test Engineer: mutation + coverage tooling (PIT needs JDK 11+ to run) -->
+    <pit.targetTests>com.yanimetaxas.bookkeeping.ai.*</pit.targetTests>
+    <pit.reportsDir>${project.build.directory}/pit-reports/v1</pit.reportsDir>
   </properties>
 
   <name>Double-Entry Bookkeeping API</name>
@@ -176,6 +179,18 @@
       <version>24.0-jre</version>
     </dependency>
 
+    <!-- JAXB was removed from the JDK in Java 11; Hibernate 5.2 still needs it -->
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+
     <!-- ======================================================== -->
     <!-- Supported JDBC drivers                                   -->
     <!-- ======================================================== -->
@@ -293,6 +308,55 @@
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
+
+      <!-- Coverage (JaCoCo) -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.8</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Mutation testing (PIT). Scope = only the classes the AI was asked to test. -->
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.15.3</version>
+        <configuration>
+          <targetClasses>
+            <param>com.yanimetaxas.bookkeeping.model.*</param>
+            <param>com.yanimetaxas.bookkeeping.validation.*</param>
+            <param>com.yanimetaxas.bookkeeping.service.TransferServiceImpl</param>
+          </targetClasses>
+          <targetTests>
+            <param>${pit.targetTests}</param>
+          </targetTests>
+          <mutators>
+            <mutator>DEFAULTS</mutator>
+          </mutators>
+          <outputFormats>
+            <format>XML</format>
+            <format>HTML</format>
+          </outputFormats>
+          <timestampedReports>false</timestampedReports>
+          <reportsDirectory>${pit.reportsDir}</reportsDirectory>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
@@ -316,4 +380,3 @@
     </plugins>
   </build>
 </project>
-
