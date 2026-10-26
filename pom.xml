@@ -346,7 +346,7 @@
             <param>${pit.targetTests}</param>
           </targetTests>
           <mutators>
-            <mutator>DEFAULTS</mutator>
+            <mutator>ALL</mutator>
           </mutators>
           <outputFormats>
             <format>XML</format>
