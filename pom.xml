@@ -13,8 +13,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <github.global.server>github</github.global.server>
     <!-- AI Test Engineer: mutation + coverage tooling (PIT needs JDK 11+ to run) -->
-    <pit.targetTests>com.yanimetaxas.bookkeeping.ai.*</pit.targetTests>
-    <pit.reportsDir>${project.build.directory}/pit-reports/v1</pit.reportsDir>
+    <pit.reportsDir>${project.build.directory}/pit-reports/v2</pit.reportsDir>
   </properties>
 
   <name>Double-Entry Bookkeeping API</name>
@@ -331,7 +330,7 @@
         </executions>
       </plugin>
 
-      <!-- Mutation testing (PIT). Scope = only the classes the AI was asked to test. -->
+      <!-- Mutation testing (PIT). Includes both AI and Manual test packages. -->
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
@@ -343,7 +342,8 @@
             <param>com.yanimetaxas.bookkeeping.service.TransferServiceImpl</param>
           </targetClasses>
           <targetTests>
-            <param>${pit.targetTests}</param>
+            <param>com.yanimetaxas.bookkeeping.ai.*</param>
+            <param>com.yanimetaxas.bookkeeping.manual.*</param>
           </targetTests>
           <mutators>
             <mutator>ALL</mutator>

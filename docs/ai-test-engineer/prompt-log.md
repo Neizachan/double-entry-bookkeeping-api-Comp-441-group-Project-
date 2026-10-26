@@ -18,3 +18,8 @@ TransferRequestAiTest.toMoneyShouldRejectNullAmountString
 TransferRequestAiTest.builderShouldNotEnforceMinimumLegCount
 TransferValidatorImplAiTest.validateTransferRequestShouldRejectEmptyRequest
 TransferValidatorImplAiTest.isTransactionBalancedShouldRejectDifferentBigDecimalScale
+
+Record of the V1 numbers
+|Setting	|Generated	|Killed	|Survived	|No coverage	Score|
+|DEFAULTS mutators|	72	|69	|3	|0	|96%  |
+|ALL mutators (headline v1)	|252	|240	|12	|0	|95.2%|
