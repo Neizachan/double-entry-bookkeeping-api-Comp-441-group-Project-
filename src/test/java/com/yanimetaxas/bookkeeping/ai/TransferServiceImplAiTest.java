@@ -1,6 +1,4 @@
-
 package com.yanimetaxas.bookkeeping.ai;
-
 import com.yanimetaxas.bookkeeping.dao.AccountDao;
 import com.yanimetaxas.bookkeeping.dao.TransactionDao;
 import com.yanimetaxas.bookkeeping.exception.AccountNotFoundException;
@@ -19,11 +17,9 @@ import java.util.List;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -31,7 +27,6 @@ import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TransferServiceImplAiTest {
 
     @Mock
@@ -47,6 +42,7 @@ public class TransferServiceImplAiTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         service = new TransferServiceImpl();
         service.setValidator(validator);
         service.setAccountDao(accountDao);
