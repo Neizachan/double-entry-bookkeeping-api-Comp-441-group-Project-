@@ -3,7 +3,7 @@
 Source: `target/pit-reports/v1/mutations.xml`. v1 headline: 240/252 killed (95.2%), 12 survivors.
 v2 (AI + manual): 251/252 killed (99.6%); the 12 original survivors -> 11 killed, 1 equivalent left.
 
-> DRAFT: the "Why the AI tests missed it" column is a starting point. To be rewritten in simplier word  before submitting (brief Section 11).
+
 
 | # | Class:line | PIT mutator | Mutation | Why the AI tests missed it | Manual test that kills it (verified by PIT v2) | Design technique |
 |---|---|---|---|---|---|---|
