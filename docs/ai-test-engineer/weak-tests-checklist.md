@@ -2,8 +2,6 @@
 
 Categories: A Meaningful - B No-oracle (only "does not throw") - C Loose assertion - D Tautology (asserts what the mock was told to return) - E Missing boundary.
 
-> DRAFT: classified from the AI test code. Open each test once and confirm the category before submitting. Rewrite the "why" in your own words.
-
 ## 1. Coverage of the AI suite alone (JaCoCo 0.8.8, 122 AI tests)
 
 Run: `mvn test -Dtest=MoneyAiTest,TransferRequestAiTest,TransferServiceImplAiTest,TransferValidatorImplAiTest` (screenshots in `docs/ai-test-engineer/evidence/`).
