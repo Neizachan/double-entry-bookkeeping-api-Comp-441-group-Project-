@@ -44,3 +44,35 @@ The production change is minimal and limited to numeric balance comparison. `git
 ### Commit
 
 Record the commit hash after the verified changes are committed.
+
+## Final verification update — 28 October 2026
+
+- Command: `mvn -B test`
+- Result: **BUILD SUCCESS**
+- Tests: 182 run, 0 failures, 0 errors, 0 skipped.
+- JaCoCo generated a report for 36 classes during this test run.
+- The three scale/balance regression tests in `DefectCandidateTest` passed.
+- Log: `/tmp/comp441-final-test.log`
+
+This updates the earlier 181-test historical entry; it does not replace it.
+The PIT mutation goal remains unresolved: an earlier execution failed during
+baseline coverage calculation. The newly archived v1/v2 reports are historical
+evidence and must not be represented as results from this final test run.
+The drafted BDD feature, threat model, and exploratory report are not evidence
+that those activities have been executed.
+
+## Final verification update — 28 October 2026
+
+- Command: `mvn -B test`
+- Result: **BUILD SUCCESS**
+- Tests: 182 run, 0 failures, 0 errors, 0 skipped.
+- JaCoCo generated a report for 36 classes during this test run.
+- The three scale/balance regression tests in `DefectCandidateTest` passed.
+- Log: `/tmp/comp441-final-test.log`
+
+This updates the earlier 181-test historical entry; it does not replace it.
+The PIT mutation goal remains unresolved: an earlier execution failed during
+baseline coverage calculation. The newly archived v1/v2 reports are historical
+evidence and must not be represented as results from this final test run.
+The drafted BDD feature, threat model, and exploratory report are not evidence
+that those activities have been executed.
