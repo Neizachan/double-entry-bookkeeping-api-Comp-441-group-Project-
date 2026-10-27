@@ -34,6 +34,6 @@ Known limitation: `Account` has complexity 0 because its only decision is the co
 - The ranking follows where faults hurt most (money invariants), not alphabetical order.
 - Implement it as two CI stages: a "fast unit" job (stages 1-3) and a "database" job (stage 4) that only starts if the first passes. Optionally add Surefire `<runOrder>failedfirst</runOrder>` so tests that failed last time run first.
 
-## Honest limits (say this in the report)
+## Honest limits To be communicated as a limitation in the report
 - The ranking is a reasoned argument, **not a measurement**: nobody timed time-to-first-failure with and without it.
 - The formula is a heuristic: the impact scores are judgement and churn carries almost no information in a 67-commit, 2018-era repository.
