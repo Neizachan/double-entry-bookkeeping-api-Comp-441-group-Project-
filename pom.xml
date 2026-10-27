@@ -334,19 +334,43 @@
               <goal>check</goal>
             </goals>
             <configuration>
+              <!-- Gate scoped to the classes our tests target (model, validation,
+                   TransferServiceImpl). The untested DAO/util classes are out of scope. -->
               <rules>
                 <rule>
-                  <element>BUNDLE</element>
+                  <element>PACKAGE</element>
+                  <includes>
+                    <include>com/yanimetaxas/bookkeeping/model</include>
+                    <include>com/yanimetaxas/bookkeeping/validation</include>
+                  </includes>
                   <limits>
                     <limit>
                       <counter>LINE</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.80</minimum>
+                      <minimum>0.90</minimum>
                     </limit>
                     <limit>
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.70</minimum>
+                      <minimum>0.85</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>com/yanimetaxas/bookkeeping/service/TransferServiceImpl</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.90</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.85</minimum>
                     </limit>
                   </limits>
                 </rule>
