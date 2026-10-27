@@ -7,11 +7,10 @@ Section 7.4 / 7.5 of the brief. This is the step between "PIT found 12 survivors
   Baseline: 238/250 killed = 95.2% (`v1-jdk11` has the same bytecode as v2, so v1 and v2 are comparable).
 - **Result:** `target/pit-reports/v2/mutations.xml`: 249/250 killed = **99.6%**. The one survivor is the
   equivalent mutant in row 1.
-- Write the "why" column in your own words before submitting (brief Section 11).
 
 ## Triage method
 
-For each survivor, read the source line and ask: *is there any input for which the original and the
+For each survivor, read the source line and ask if *there any input for which the original and the
 mutated code give a different observable result?*
 
 | Verdict | Meaning | Action |
@@ -43,9 +42,9 @@ PIT v2 result: 11 of 12 killed; the remaining one is the equivalent mutant (#1).
 
 ## Which 8 go in `surviving-mutants.md`, and why
 
-The brief asks for at least 8 survivors with a plain-language reason and the manual test. The table in
+The brief asks for at least 8 survivors  and the manual test. The table in
 `surviving-mutants.md` uses #2, #7, #8, #9, #10, #11, #12 and one representative of the hash group
-(#5). Selection rules used:
+(#5). Selection rules that were used:
 
 1. Exclude the equivalent mutant (#1): there is no test to show.
 2. Take every mutant from a different code location, so the eight reasons are different.
@@ -65,7 +64,7 @@ It was corrected once the lines were read:
 | 7 | "killable, easy" | killable only through list mutability (weak contract) |
 | 12 | "possibly equivalent" | killable with a non-zero timestamp |
 
-Keep this table in the report: it is evidence that triage was done by reasoning about the code, not
+This is evidence that triage was done by reasoning about the code, not
 by trusting the tool's labels.
 
 ## Traceability note (Section 7.5 / RTM)
