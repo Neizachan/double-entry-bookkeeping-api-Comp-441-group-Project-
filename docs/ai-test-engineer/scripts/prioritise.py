@@ -15,9 +15,9 @@ CLASSES = {
  "model/TransactionLeg":             (2, "null guards only", "(TransactionLeg tests)"),
 }
 def metrics(c):
-    src = pathlib.Path(BASE + c + ".java").read_text()
+    src = pathlib.Path(BASE + c + ".java").read_text(encoding="utf-8")
     cx = len(re.findall(r"\b(if|for|while|case)\b|&&|\|\||\?", src))
-    ch = int(subprocess.check_output(f"git log --oneline --follow -- {BASE+c}.java | wc -l", shell=True))
+    ch = len(subprocess.check_output(["git", "log", "--oneline", "--follow", "--", BASE + c + ".java"]).decode().splitlines())
     return cx, ch
 rows = []
 for c, (imp, why, t) in CLASSES.items():

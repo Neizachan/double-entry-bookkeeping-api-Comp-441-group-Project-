@@ -18,6 +18,6 @@ fig, ax = plt.subplots(figsize=(6, 4.2))
 bars = ax.bar(["v1: AI-only suite\n(Week 7)", "v2: hybrid suite\n(Week 11)"], [v1, v2], color=["#c0504d", "#2e7d32"], width=.55)
 for b, v, l in zip(bars, [v1, v2], lab):
     ax.text(b.get_x()+b.get_width()/2, v+1.5, f"{v}%\n{l}".strip(), ha="center", fontsize=10)
-ax.set_ylim(0, 105); ax.set_ylabel("Mutation score (%)")
-ax.set_title(f"PIT mutation score: v1 -> v2  (+{round(v2-v1,1)} pts)\ndouble-entry-bookkeeping-api")
+ax.set_ylim(0, 115); ax.set_ylabel("Mutation score (%)")
+ax.set_title(f"PIT mutation score: v1 -> v2  (+{round(v2-v1,1)} pts)\ndouble-entry-bookkeeping-api", pad=14)
 plt.tight_layout(); plt.savefig("mutation_v1_v2.png", dpi=200); print("saved mutation_v1_v2.png")

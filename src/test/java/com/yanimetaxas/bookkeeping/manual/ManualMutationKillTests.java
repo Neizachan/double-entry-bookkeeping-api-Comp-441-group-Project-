@@ -1,16 +1,21 @@
-package com.manual;
+package com.yanimetaxas.bookkeeping.manual;
 
+import com.yanimetaxas.bookkeeping.dao.AccountDao;
+import com.yanimetaxas.bookkeeping.dao.TransactionDao;
+import com.yanimetaxas.bookkeeping.exception.AccountNotFoundException;
 import com.yanimetaxas.bookkeeping.exception.UnbalancedLegsException;
 import com.yanimetaxas.bookkeeping.model.Money;
 import com.yanimetaxas.bookkeeping.model.Transaction;
 import com.yanimetaxas.bookkeeping.model.TransactionLeg;
 import com.yanimetaxas.bookkeeping.model.TransferRequest;
+import com.yanimetaxas.bookkeeping.service.TransferServiceImpl;
 import com.yanimetaxas.bookkeeping.validation.TransferValidatorImpl;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +23,8 @@ import java.util.List;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Manual tests written to kill survivors from the PIT v1 report
@@ -129,7 +136,31 @@ public class ManualMutationKillTests {
     }
 
     // ------------------------------------------------------------------
-    // OPTIONAL: TransferValidatorImpl.java:95 (removed Money::getCurrency).
+    // TransferServiceImpl.java:68 -> `return Lists.newArrayList()` replaced
+    // by Collections.emptyList(). Both are empty, but the original hands the
+    // caller a MUTABLE list. The AI test only asserted isEmpty().
+    // ------------------------------------------------------------------
+    @Test
+    public void noTransactionsReturnsAMutableEmptyList() throws AccountNotFoundException {
+        AccountDao accountDao = mock(AccountDao.class);
+        TransactionDao transactionDao = mock(TransactionDao.class);
+        TransferServiceImpl service = new TransferServiceImpl();
+        service.setAccountDao(accountDao);
+        service.setTransactionDao(transactionDao);
+        when(accountDao.accountExists("ACC-1")).thenReturn(true);
+        when(transactionDao.getTransactionRefsForAccount("ACC-1"))
+                .thenReturn(Collections.<String>emptySet());
+
+        List<Transaction> result = service.findTransactionsByAccountRef("ACC-1");
+        result.add(new Transaction("TX-6", "TRANSFER", new Date(),
+                new ArrayList<TransactionLeg>()));
+
+        assertEquals(1, result.size());
+    }
+
+    // ------------------------------------------------------------------
+    // TransferValidatorImpl.java:95 (removed Money::getCurrency in
+    // sortByCurrency -> every leg lands in one bucket). (removed Money::getCurrency).
     // Only kills the mutant if line 95 is where legs are grouped by
     // currency. If that mutant still survives, treat it as equivalent.
     // ------------------------------------------------------------------
