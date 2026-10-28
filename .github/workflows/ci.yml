@@ -23,8 +23,8 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - name: Build, test and enforce coverage
-        run: mvn --batch-mode verify
+      - name: Build and test without mutation check
+        run: mvn --batch-mode verify -Dpitest.skip=true
 
       - name: Run PIT mutation coverage
         run: mvn --batch-mode org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=95 -Dpit.reportsDir=target/pit-reports/ci
