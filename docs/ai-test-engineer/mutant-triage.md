@@ -5,7 +5,7 @@ Section 7.4 / 7.5 of the brief. This is the step between "PIT found 12 survivors
 
 - **Input:** the 12 SURVIVED mutants in `target/pit-reports/v1-jdk11/mutations.xml` (also `survivors.txt`).
   Baseline: 238/250 killed = 95.2% (`v1-jdk11` has the same bytecode as v2, so v1 and v2 are comparable).
-- **Result:** `target/pit-reports/v2/mutations.xml`: 249/250 killed = **99.6%**. The one survivor is the
+- **Historical result:** the earlier v2 report recorded 249/250 killed. The latest clean rerun generated 251 mutations, killed 250 of 251 (approximately 99.6%; PIT reports 99% test strength), and left one equivalent survivor with zero uncovered mutations. The one survivor is the
   equivalent mutant in row 1.
 
 ## Triage method
@@ -24,7 +24,7 @@ mutated code give a different observable result?*
 
 | # | Location | PIT mutator / mutation | Verdict | Reasoning from the source | Killed by (PIT v2) |
 |---|---|---|---|---|---|
-| 1 | `TransferValidatorImpl:85` | BigDecimalMutator: `add` replaced by `subtract` | **Equivalent** | `sum` starts at `BigDecimal.ZERO` and the check is `sum.equals(new BigDecimal("0.00"))`. Subtracting gives exactly the negated total at the same scale, and the negation of zero is zero, so the verdict is identical for every input. | not killable; still SURVIVED in v2 (expected) |
+| 1 | `TransferValidatorImpl:85` | BigDecimalMutator: `add` replaced by `subtract` | **Equivalent** | `sum` starts at `BigDecimal.ZERO` and the current check uses `sum.compareTo(BigDecimal.ZERO)`. Subtracting each amount instead of adding it negates the total; the total is zero exactly when its negation is zero, so the verdict is identical for every input. | not killable; still SURVIVED in v2 (expected) |
 | 2 | `TransferValidatorImpl:95` | NonVoidMethodCallMutator: removed `Money::getCurrency` | **Killable** | The call is the key in `sortByCurrency`. Without it every leg goes into one bucket, so legs that cancel only across currencies (USD +100, EUR -100) would be accepted. | `legsThatOnlyCancelAcrossDifferentCurrenciesAreUnbalanced` |
 | 3 | `Money:96` | NonVoidMethodCallMutator: removed `BigDecimal::hashCode` | **Killable** (exact-value only) | The hash changes, but only a test that checks the actual value sees it; the contract (equal objects, equal hashes) still holds. | `moneyHashCodeIsAmountHashTimes31PlusCurrencyHash` |
 | 4 | `Money:97` | InlineConstantMutator: `31` to `32` | **Killable** (exact-value only) | Same as #3. | same hash test |

@@ -1,7 +1,7 @@
 # Surviving mutants - v1 (AI-only suite)
 
 Source: `target/pit-reports/v1/mutations.xml`. v1 headline: 240/252 killed (95.2%), 12 survivors.
-v2 (AI + manual): 251/252 killed (99.6%); the 12 original survivors -> 11 killed, 1 equivalent left.
+Latest clean PIT rerun: 250/251 mutations killed (approximately 99.6%; PIT reports 99% test strength), 1 equivalent mutant survived, and 0 mutations were uncovered. The earlier v1/v2 figures below are historical.
 
 
 
@@ -21,7 +21,7 @@ Also killed by the same hash test (not counted in the 8): Money:96 (`BigDecimal:
 ## Equivalent mutant (excluded from the 8)
 
 **TransferValidatorImpl:85, BigDecimalMutator, `add` replaced by `subtract`.**
-The loop starts from `BigDecimal.ZERO` and computes `sum = sum.add(amount)`. With `subtract` the loop computes the negated total. The check is `sum.equals(new BigDecimal("0.00"))`, and the negation of zero is still `0.00` at the same scale, so the verdict is identical for every input. No test can tell the two versions apart. PIT v2 still reports it as SURVIVED, as expected.
+The loop starts from `BigDecimal.ZERO` and computes `sum = sum.add(amount)`. With `subtract` the loop computes the negated total. The current check is `sum.compareTo(BigDecimal.ZERO) != 0`. Replacing addition with subtraction negates the accumulated sum; a sum is zero if and only if its negation is zero, so the verdict is identical for every input. No test can tell the two versions apart. PIT v2 still reports it as SURVIVED, as expected.
 
 ## Decision table for TransferValidatorImpl balance check (supports #1)
 

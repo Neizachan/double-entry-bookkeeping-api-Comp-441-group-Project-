@@ -1,46 +1,47 @@
 # COMP441 Test Plan
 
-## 1. Purpose and scope
-Evaluate the bookkeeping API through unit, integration, acceptance, mutation,
-static-analysis, security, and exploratory testing.
+**Role:** Kevin — Test Lead  
+**System:** Double-Entry Bookkeeping API  
+**Environment:** Java 17, Maven 3.8.7; record the tested commit with each run.
 
-## 2. Test objectives
-- Verify monetary values and transaction-leg balancing.
-- Verify transfer request validation and service interactions.
-- Detect regressions in account and ledger behaviour.
-- Assess test effectiveness using coverage and mutation testing.
-- Identify security, reliability, and usability risks.
+## Purpose and scope
+Verify monetary semantics, transfer validation, service coordination, account
+boundaries, ledger behaviour, and regression safety. Testing includes unit,
+integration/functional, mutation, static-analysis, and exploratory activities.
+Security and external acceptance behaviour remain subject to the implemented
+interfaces and authoritative requirements.
 
-## 3. Test levels
-| Level | Focus | Evidence |
-|---|---|---|
-| Unit | Money, request models, validators, service logic | JUnit reports |
-| Integration | Interactions among service, ledger, and account components | Integration test reports |
-| Acceptance | Externally observable transfer and ledger outcomes | Acceptance scenarios |
-| Mutation | Tests' ability to kill injected faults | PIT v1/v2 reports |
-| Static analysis | Maintainability and defect patterns | Tool output and triage |
-| Security | Input handling, authorization assumptions, sensitive data | SAST output and threat model |
-| Exploratory | Unscripted investigation of risky behaviours | Session report |
+## Strategy
+- **Unit/regression:** JUnit tests for monetary values, validation, currency
+  grouping, boundary conditions, and service interactions.
+- **Integration/functional:** exercise supported bank/account/ledger workflows.
+- **Coverage:** use JaCoCo to identify unexecuted instructions and branches.
+- **Mutation:** use PIT to assess assertion effectiveness; triage survivors and
+  document equivalent mutants separately.
+- **Static analysis:** run PMD, review findings, and preserve the report.
+- **Exploratory:** use a timeboxed charter focused on transfer invariants,
+  malformed inputs, boundaries, and failure handling. AI suggestions are leads,
+  not evidence, until a human executes and records them.
 
-## 4. Approach
-Use automated JUnit tests for repeatable checks. Use boundary and decision-table
-tests for monetary values and validation. Use mutation testing to find weak
-assertions. Record each defect with reproduction steps, impact, evidence,
-remediation, and regression coverage.
+## Environment and evidence
+Record Java/Maven/tool versions, branch, commit hash, exact commands, reports,
+and test totals. Do not treat historical reports as results for the final commit.
 
-## 5. Entry and exit criteria
-Entry: source is available, Java/Maven environment is configured, and tests can
-be executed.
-Exit: required suites have recorded results; failures and surviving mutants are
-triaged; coverage and mutation results are reproducible; unresolved risks are
-documented. A failed quality gate must be reported as failed, not passed.
+## Entry criteria
+Source and dependencies are available; the intended branch and commit are
+identified; tests can be run in the documented environment.
 
-## 6. Environment and limitations
-Record Java and Maven versions, commit hash, commands, and tool versions with
-each result. Distinguish historical reports from reports generated from the
-final commit. Any suite not executed remains pending.
+## Exit criteria
+Required checks have recorded results; failures and surviving mutants are
+triaged; defects have reproduction steps and regression coverage; remaining
+risks and unexecuted activities are disclosed. A failed or unexecuted check
+must not be marked as passed.
 
-## 7. Defect lifecycle
-New -> Triaged -> Assigned -> Fixed -> Retested -> Closed.
-Use Reopened when a regression remains. Severity and priority are recorded
-separately.
+## Defect lifecycle
+New → Triaged → Assigned → Fixed → Retested → Closed. Reopen when a regression
+persists. Record severity separately from priority.
+
+## Responsibilities
+Test Lead: plan, traceability, evidence, triage, and reporting. Developers:
+fix defects and provide regression tests. Reviewers: inspect evidence and
+confirm release/merge gates.

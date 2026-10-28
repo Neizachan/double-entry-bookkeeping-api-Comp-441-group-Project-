@@ -1,13 +1,15 @@
 # COMP441 Risk Register
 
-| ID | Risk | Likelihood | Impact | Mitigation | Status |
+Likelihood and impact use Low / Medium / High. Ratings are qualitative and
+should be revisited when new evidence becomes available.
+
+| ID | Risk | Likelihood | Impact | Mitigation / contingency | Owner / status |
 |---|---|---|---|---|---|
-| R1 | Monetary scale comparison rejects numerically balanced legs | Medium | High | Regression tests for different BigDecimal scales; compare numerically | Fix recorded; reverify |
-| R2 | Weak tests allow faulty transfer validation to survive | High | High | PIT analysis, decision tables, survivor triage | Historical v1/v2 evidence |
-| R3 | PIT baseline coverage fails despite Surefire passing | High | High | Diagnose test selection/runtime mismatch; rerun PIT independently | Open |
-| R4 | Requirements lack explicit test-case traceability | Medium | Medium | Maintain RTM and update it with verified test IDs | RTM started |
-| R5 | Security issues remain undetected without SAST | Medium | High | Run Semgrep, triage findings, remediate and rescan | Pending execution |
-| R6 | Hard-coded CI service token is exposed | Medium | High | Revoke/rotate token; use repository secret; inspect Git history | Action required |
-| R7 | Integration/acceptance behaviour is under-tested | Medium | High | Add scenarios for valid, invalid, and boundary transfers | Pending verification |
-| R8 | Historical reports do not represent final source state | High | High | Record commit hashes and regenerate final reports | Archive preserved |
-| R9 | Deadline prevents completion of all evidence | High | High | Prioritise reproducible results, missing required documents, and submission checks | Active |
+| R1 | Monetary or currency validation accepts an invalid transfer or rejects a numerically balanced one. | Medium | High | Test scale variants, genuine imbalance, and cross-currency cancellation; retain regression tests. | Test Lead + developer; regression tests exist, final run required |
+| R2 | Tests miss defects despite a passing unit suite. | Medium | High | Review JaCoCo and PIT evidence; classify survivors, including equivalent mutants; add targeted tests for killable mutants. | Test Lead; latest clean PIT evidence recorded, rerun on final commit |
+| R3 | CI or local verification is not reproducible on the merge target. | Medium | High | Run `mvn -B clean verify` on the branch and again after merge; capture logs and commit IDs. | Test Lead / CI owner; final merged run pending |
+| R4 | Security, authorization, or failure-handling weaknesses are not covered by the available analysis. | Medium | High | Review threat model and supported API boundaries; run an appropriate security scanner and triage its actual output. | Security reviewer; security scan pending |
+| R5 | Incomplete or stale evidence causes unsupported submission claims or missed work. | High | High | Maintain ten-item RTM, versioned reports, a task estimate, and an explicit pending/completed status for exploratory testing. | Kevin, Test Lead; documentation audit in progress |
+
+**Review rule:** A risk is not closed solely because a document or test class exists.
+Record execution evidence and reassess residual risk.
